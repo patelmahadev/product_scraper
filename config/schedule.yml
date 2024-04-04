@@ -1,0 +1,4 @@
+daily_record_job:
+  cron: '* * * * *'
+  class: "MyFirstJob"
+  queue: "default"

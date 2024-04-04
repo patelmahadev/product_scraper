@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Product Scraper</title>
+</head>
+<body>
+  <div class="container">
+    <h1>Product Scraper</h1>
+
+    <%= form_tag(products_path, method: :post) do %>
+      <%= label_tag :url, 'Enter URL to scrape:' %>
+      <%= text_field_tag :url, nil, placeholder: "Enter the URL of the product page you want to scrape..." %>
+      <%= submit_tag 'Scrape' %>
+    <% end %>
+
+    <%= form_with(url: products_path, method: "get") do %>
+      <%= text_field_tag :search, params[:search], placeholder: "Search categories..." %>
+      <%= submit_tag "Search" %>
+    <% end %>
+
+    <% if flash[:alert].present? %>
+      <div class="alert alert-danger">
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
+
+    <ul>
+      <% @products.each do |product| %>
+        <li>
+          <strong><%= product.title %></strong>
+          <% if product&.image_urls.present?%>
+            <%= image_tag product&.image_urls, class: "product-image" %>
+          <%end%>
+          <p><%= product.description %></p>
+          <p>Price: <%= product.price %></p>
+          <p>Ratting: <%= product.size %></p>
+          <p>Category: <span class="product-category"><%= product.category.name %></span></p>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</body>
+</html>
