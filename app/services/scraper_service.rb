@@ -9,7 +9,7 @@ class ScraperService
   end
 
   def scrape
-    response = HTTParty.get(@url) || RestClient.get(@url)
+    response = RestClient.get(@url) || HTTParty.get(@url) 
     html = response.body
     doc = Nokogiri::HTML(html)
     title = doc.at_css('title')&.text || doc.title
